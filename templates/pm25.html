@@ -73,12 +73,17 @@
 
         function drawChart(chart, url, title, xKey, yKey, color = "blue") {
 
+            chart.showLoading();
             $.ajax(
                 {
                     url: url,
                     type: "GET",
                     dataType: "json",
+                    error: () => {
+                        alert("讀取資料錯誤，請稍後在試!");
+                    },
                     success: (result) => {
+                        chart.hideLoading();
                         console.log(result);
                         var option = {
                             title: {

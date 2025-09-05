@@ -37,7 +37,7 @@ def get_county_pm25(county):
     if len(result) == 0:
         return Response(
             json.dumps(
-                {"result": "取的資料失敗", "message": f"無此{county}縣市資料"},
+                {"result": "取得資料失敗", "message": f"無此({county})資料"},
                 ensure_ascii=False,
             )
         )
@@ -83,6 +83,7 @@ def update_db():
     return json.dumps(result, ensure_ascii=False)
 
 
+@app.route("/")
 @app.route("/pm25")
 def get_pm25():
     values, countys = get_data_from_mysql()
@@ -117,11 +118,10 @@ def now_time():
     return time
 
 
-@app.route("/")
 def index():
     time = now_time()
     return render_template("index.html", x=time, name="jerry")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
